@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+
+ drupal:
+    image: drupal:8-apache
+    volumes:
+     - ./www/modules:/var/www/html/modules
+     - ./www/profiles:/var/www/html/profiles
+     - ./www/themes:/var/www/html/themes
+     - sites:/var/www/html/sites
+    links:
+        - "db:mysql"
+    ports:
+        - 8080:80
+    restart: always
+
+ db:
+    image: mysql:5
+    volumes:
+        - ./db:/var/lib/mysql
+    environment:
+        - MYSQL_USER=drup8
+        - MYSQL_PASSWORD=drup8
+        - MYSQL_DATABASE=drup8
+        - MYSQL_ROOT_PASSWORD=drup8
+
+volumes:
+   modules:
+   profiles:
+   themes:
